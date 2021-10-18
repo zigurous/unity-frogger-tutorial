@@ -1,9 +1,9 @@
-# Project Title
+# Frogger
 
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nibh elit, iaculis id condimentum vitae, efficitur nec lorem. Nam convallis ligula vitae velit porta interdum. Donec euismod sem ligula, aliquet lacinia eros mollis molestie. Maecenas et enim mollis lacus ultrices consequat. Quisque vehicula id neque sit amet placerat. Etiam posuere vel ipsum vel tincidunt. Nulla et efficitur urna. Phasellus varius gravida velit non commodo. Vivamus sagittis commodo nibh vitae posuere.
+> Frogger is an action game developed by Konami and manufactured by Sega as an arcade video game in 1981. The player directs each frog to its home by crossing a busy road and navigating a hazardous river.
 
-- **Difficulty**:
-- **Topics**:
-- **Version**:
-- [**Download**]()
+- **Difficulty**: Intermediate
+- **Topics**: Sprites, Collision, Scoring
+- **Version**: Unity 2019.4
+- [**Download**](https://github.com/zigurous/unity-frogger-tutorial/archive/refs/heads/main.zip)
 - [**Watch Video**](https://www.youtube.com/c/zigurous)
