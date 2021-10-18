@@ -4,16 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Frogger : MonoBehaviour
 {
-    private GameManager gameManager;
     public SpriteRenderer spriteRenderer { get; private set; }
+
     public Sprite idleSprite;
     public Sprite leapSprite;
     public Sprite deadSprite;
 
+    private Vector3 spawnPosition;
+    private float farthestRow;
+
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spawnPosition = transform.position;
     }
 
     private void Update()
@@ -70,8 +73,12 @@ public class Frogger : MonoBehaviour
         // Conditions pass, move to the destination
         else
         {
-            // Update game state
-            gameManager.FroggerMoved(destination);
+            // Check if we have advanced to a farther row
+            if (destination.y > farthestRow)
+            {
+                farthestRow = destination.y;
+                FindObjectOfType<GameManager>().AdvancedRow();
+            }
 
             // Start leap animation
             StopAllCoroutines();
@@ -92,8 +99,9 @@ public class Frogger : MonoBehaviour
         while (elapsed < duration)
         {
             // Move towards the destination over time
+            float t = elapsed / duration;
+            transform.position = Vector3.Lerp(startPosition, destination, t);
             elapsed += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPosition, destination, elapsed / duration);
             yield return null;
         }
 
@@ -102,14 +110,15 @@ public class Frogger : MonoBehaviour
         spriteRenderer.sprite = idleSprite;
     }
 
-    public void Respawn(Vector3 position)
+    public void Respawn()
     {
         // Stop animations
         StopAllCoroutines();
 
         // Reset transform to spawn
-        transform.position = position;
         transform.rotation = Quaternion.identity;
+        transform.position = spawnPosition;
+        farthestRow = spawnPosition.y;
 
         // Reset sprite
         spriteRenderer.sprite = idleSprite;
@@ -132,15 +141,15 @@ public class Frogger : MonoBehaviour
         spriteRenderer.sprite = deadSprite;
 
         // Update game state
-        gameManager.Died();
+        FindObjectOfType<GameManager>().Died();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         bool hitObstacle = other.gameObject.layer == LayerMask.NameToLayer("Obstacle");
-        bool deplatformed = transform.parent == null;
+        bool onPlatform = transform.parent != null;
 
-        if (enabled && hitObstacle && deplatformed) {
+        if (enabled && hitObstacle && !onPlatform) {
             Death();
         }
     }

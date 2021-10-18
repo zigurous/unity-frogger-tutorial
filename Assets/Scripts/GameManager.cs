@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour
     private int score;
     private int time;
 
-    private Vector3 spawnPosition;
-    private float farthestRow;
     private float respawnTime;
 
     private void Awake()
@@ -26,8 +24,6 @@ public class GameManager : MonoBehaviour
 
         homes = FindObjectsOfType<Home>();
         frogger = FindObjectOfType<Frogger>();
-
-        spawnPosition = frogger.transform.position;
     }
 
     private void Start()
@@ -38,7 +34,6 @@ public class GameManager : MonoBehaviour
     private void NewGame()
     {
         gameOverMenu.SetActive(false);
-        frogger.gameObject.SetActive(true);
 
         SetScore(0);
         SetLives(3);
@@ -51,19 +46,12 @@ public class GameManager : MonoBehaviour
             homes[i].enabled = false;
         }
 
-        NewRound();
-    }
-
-    public void NewRound()
-    {
-        farthestRow = spawnPosition.y;
-
         Respawn();
     }
 
     private void Respawn()
     {
-        frogger.Respawn(spawnPosition);
+        frogger.Respawn();
 
         StopAllCoroutines();
         StartCoroutine(Timer(30));
@@ -121,16 +109,12 @@ public class GameManager : MonoBehaviour
         NewGame();
     }
 
-    public void FroggerMoved(Vector3 destination)
+    public void AdvancedRow()
     {
-        if (destination.y > farthestRow)
-        {
-            farthestRow = destination.y;
-            SetScore(score + 10);
-        }
+        SetScore(score + 10);
     }
 
-    public void HomeReached()
+    public void HomeOccupied()
     {
         frogger.gameObject.SetActive(false);
 
@@ -144,7 +128,7 @@ public class GameManager : MonoBehaviour
             Invoke(nameof(NewLevel), 1f);
         }
         else {
-            Invoke(nameof(NewRound), 1f);
+            Invoke(nameof(Respawn), 1f);
         }
     }
 
@@ -163,13 +147,13 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         this.score = score;
-        scoreText.text = this.score.ToString();
+        scoreText.text = score.ToString();
     }
 
     private void SetLives(int lives)
     {
         this.lives = lives;
-        livesText.text = this.lives.ToString();
+        livesText.text = lives.ToString();
     }
 
 }

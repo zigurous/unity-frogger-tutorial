@@ -6,21 +6,20 @@ public class Home : MonoBehaviour
 
     private void OnEnable()
     {
-        this.frog.SetActive(true);
+        frog.SetActive(true);
     }
 
     private void OnDisable()
     {
-        this.frog.SetActive(false);
+        frog.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
-            this.enabled = true;
-
-            FindObjectOfType<GameManager>().HomeReached();
+            enabled = true;
+            FindObjectOfType<GameManager>().HomeOccupied();
         }
     }
 
