@@ -1,6 +1,6 @@
 # Frogger
 
-> Frogger is an action game developed by Konami and manufactured by Sega as an arcade video game in 1981. The player directs each frog to its home by crossing a busy road and navigating a hazardous river.
+> Frogger is an action game developed by Konami and manufactured by Sega as an arcade game in 1981. The player directs each frog to its home by crossing a busy road and navigating a hazardous river, scoring points along the way.
 
 - **Difficulty**: Intermediate
 - **Topics**: Sprites, Collision, Scoring
