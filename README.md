@@ -6,4 +6,4 @@
 - **Topics**: Sprites, Collision, Coroutines
 - **Version**: Unity 2019.4 LTS
 - [**Download**](https://github.com/zigurous/unity-frogger-tutorial/archive/refs/heads/main.zip)
-- [**Watch Video**](https://www.youtube.com/c/zigurous)
+- [**Watch Video**](https://youtu.be/GxlxZ5q__Tc)
