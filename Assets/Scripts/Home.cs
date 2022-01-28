@@ -25,7 +25,7 @@ public class Home : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!enabled && other.tag == "Player")
+        if (!enabled && other.gameObject.CompareTag("Player"))
         {
             enabled = true;
             FindObjectOfType<GameManager>().HomeOccupied();
