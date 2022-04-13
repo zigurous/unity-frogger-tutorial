@@ -12,6 +12,7 @@ public class Frogger : MonoBehaviour
 
     private Vector3 spawnPosition;
     private float farthestRow;
+    private bool cooldown;
 
     private void Awake()
     {
@@ -45,6 +46,10 @@ public class Frogger : MonoBehaviour
 
     private void Move(Vector3 direction)
     {
+        if (cooldown) {
+            return;
+        }
+
         Vector3 destination = transform.position + direction;
 
         // Check for collision at the destination
@@ -95,6 +100,7 @@ public class Frogger : MonoBehaviour
 
         // Set initial state
         spriteRenderer.sprite = leapSprite;
+        cooldown = true;
 
         while (elapsed < duration)
         {
@@ -108,6 +114,7 @@ public class Frogger : MonoBehaviour
         // Set final state
         transform.position = destination;
         spriteRenderer.sprite = idleSprite;
+        cooldown = false;
     }
 
     public void Respawn()
@@ -126,6 +133,7 @@ public class Frogger : MonoBehaviour
         // Enable control
         gameObject.SetActive(true);
         enabled = true;
+        cooldown = false;
     }
 
     public void Death()
