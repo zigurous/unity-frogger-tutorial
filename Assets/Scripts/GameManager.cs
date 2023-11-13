@@ -4,26 +4,35 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private Frogger frogger;
-    private Home[] homes;
+    public static GameManager Instance { get; private set; }
 
-    public GameObject gameOverMenu;
-    public Text timeText;
-    public Text livesText;
-    public Text scoreText;
+    [SerializeField] private Home[] homes;
+    [SerializeField] private Frogger frogger;
+    [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private Text timeText;
+    [SerializeField] private Text livesText;
+    [SerializeField] private Text scoreText;
 
     private int lives;
     private int score;
     private int time;
 
-    private float respawnTime;
+    public int Lives => lives;
+    public int Score => score;
+    public int Time => time;
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
-
-        homes = FindObjectsOfType<Home>();
-        frogger = FindObjectOfType<Frogger>();
+        if (Instance != null)
+        {
+            DestroyImmediate(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            Application.targetFrameRate = 60;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()
@@ -127,7 +136,8 @@ public class GameManager : MonoBehaviour
             SetScore(score + 1000);
             Invoke(nameof(NewLevel), 1f);
         }
-        else {
+        else
+        {
             Invoke(nameof(Respawn), 1f);
         }
     }

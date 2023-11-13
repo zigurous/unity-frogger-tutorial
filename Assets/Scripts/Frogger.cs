@@ -4,12 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Frogger : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer { get; private set; }
-
     public Sprite idleSprite;
     public Sprite leapSprite;
     public Sprite deadSprite;
 
+    private SpriteRenderer spriteRenderer;
     private Vector3 spawnPosition;
     private float farthestRow;
     private bool cooldown;
@@ -46,9 +45,7 @@ public class Frogger : MonoBehaviour
 
     private void Move(Vector3 direction)
     {
-        if (cooldown) {
-            return;
-        }
+        if (cooldown) return;
 
         Vector3 destination = transform.position + direction;
 
@@ -82,7 +79,7 @@ public class Frogger : MonoBehaviour
             if (destination.y > farthestRow)
             {
                 farthestRow = destination.y;
-                FindObjectOfType<GameManager>().AdvancedRow();
+                GameManager.Instance.AdvancedRow();
             }
 
             // Start leap animation
@@ -123,8 +120,7 @@ public class Frogger : MonoBehaviour
         StopAllCoroutines();
 
         // Reset transform to spawn
-        transform.rotation = Quaternion.identity;
-        transform.position = spawnPosition;
+        transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
         farthestRow = spawnPosition.y;
 
         // Reset sprite
@@ -149,7 +145,7 @@ public class Frogger : MonoBehaviour
         spriteRenderer.sprite = deadSprite;
 
         // Update game state
-        FindObjectOfType<GameManager>().Died();
+        GameManager.Instance.Died();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

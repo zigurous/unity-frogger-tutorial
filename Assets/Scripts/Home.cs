@@ -4,6 +4,7 @@
 public class Home : MonoBehaviour
 {
     public GameObject frog;
+
     private BoxCollider2D boxCollider;
 
     private void Awake()
@@ -28,7 +29,7 @@ public class Home : MonoBehaviour
         if (!enabled && other.gameObject.CompareTag("Player"))
         {
             enabled = true;
-            FindObjectOfType<GameManager>().HomeOccupied();
+            GameManager.Instance.HomeOccupied();
         }
     }
 

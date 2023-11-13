@@ -27,7 +27,7 @@ public class MoveCycle : MonoBehaviour
         }
         // Move the object
         else {
-            transform.Translate(direction * speed * Time.deltaTime);
+            transform.Translate(speed * Time.deltaTime * direction);
         }
     }
 
