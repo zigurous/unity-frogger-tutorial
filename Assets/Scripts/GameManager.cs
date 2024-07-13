@@ -13,25 +13,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text livesText;
     [SerializeField] private Text scoreText;
 
-    private int lives;
-    private int score;
-    private int time;
-
-    public int Lives => lives;
-    public int Score => score;
-    public int Time => time;
+    public int lives { get; private set; } = 3;
+    public int score { get; private set; } = 0;
+    public int time { get; private set; } = 30;
 
     private void Awake()
     {
-        if (Instance != null)
-        {
+        if (Instance != null) {
             DestroyImmediate(gameObject);
-        }
-        else
-        {
+        } else {
             Instance = this;
-            Application.targetFrameRate = 60;
-            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) {
+            Instance = null;
         }
     }
 
